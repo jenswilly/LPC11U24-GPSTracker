@@ -1,0 +1,3 @@
+[submodule "common_LPC11U24"]
+	path = common_LPC11U24
+	url = git@github.com:jenswilly/LPC11U24_Common.git

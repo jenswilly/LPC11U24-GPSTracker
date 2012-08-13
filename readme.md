@@ -1,6 +1,7 @@
-# LPC11U24 USB CDC example
-This project creates a [USB Communications Device Class](http://en.wikipedia.org/wiki/USB_communications_device_class) – i.e. a 
-virtual serial port.
+# LPC11U24 GPS Tracker
+This project if firmware for a GSM enabled GPS Tracker.
+
+The project uses CMSIS and compiles with the [Yagarto toolchain](http://yagarto.de).
 
 ## Building
 This project uses the my standard Makefile. The following make targets are available:
@@ -30,31 +31,3 @@ Added `/Users/jenswilly/Yagarto/yagarto-4.7.1/arm-none-eabi/include`
 Added symbol `__GNUC__` with value `1`
 
 The changes are not necessary for building, but they *are* necessary for indexing and syntax check to work correctly.
-
-## Code walkthrough
-All the interesting stuff happens in `main.c`.
-
-### Initialization
-`init_uart1_bridge()`  
-`USB_pin_clk_init()`  
-`main()`
-
-### UART methods
-(Not including init methods:)  
-`UART_IRQHandler()`   
-`uart_write()`  
-`uart_read()`  
-`UARTSend()`  
-Method for sending a string on UART without relying on VCOM_DATA structs.
-Example: `UARTSend( (uint8_t*)"USB connect\r\n", 13);`
-
-
-### USB methods
-(Again, not including init methods:)  
-`VCOM_bulk_in_hdlr()`  
-`VCOM_bulk_out_hdlr()`  
-`VCOM_SendBreak()`  
-`VCOM_SetLineCode()`  
-`VCOM_sof_event()`  
-`VCOM_uart_send()`  
-`VCOM_usb_send()`

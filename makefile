@@ -40,6 +40,7 @@ SRC  = $(COMMONDIR)/cmsis/core/core_cm0.c \
        $(COMMONDIR)/cmsis/device/startup_LPC11U24.c \
 	   $(COMMONDIR)/drivers/usb/cdc_desc.c \
 	   $(COMMONDIR)/drivers/usb_cdc/usb_cdc.c \
+	   $(COMMONDIR)/drivers/eeprom/eeprom.c \
        ./src/main.c
 
 # List ASM source files here
@@ -49,6 +50,7 @@ ASRC =
 UINCDIR = ./src \
           $(COMMONDIR)/cmsis/core \
           $(COMMONDIR)/cmsis/device \
+          $(COMMONDIR)/drivers/eeprom \
           $(COMMONDIR)/drivers/usb_cdc \
 		  $(COMMONDIR)/drivers/usb
 

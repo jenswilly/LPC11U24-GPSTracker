@@ -1,21 +1,27 @@
 ##############################################################################################
-# 
-# On command line:
 #
-# make all = Create project
-# make bin = Build and convert to binary file
-# make crc = Build, convert to binary and add checksum
-# make flash = Build, convert to binary, add checksum and copy to USB device
-# make size = Show size usage
-# make objdump = Dump objects to objdump.txt
-# make clean = Clean project files.
+#  Makefile
+#  
+#  Created by Jens Willy Johannsen on 2012-08-14.
+#  
+#  This file is released under Creative Commons – Attribution 3.0 Unported (CC BY 3.0)
+#  http://creativecommons.org/licenses/by/3.0/
 #
-# To rebuild project do "make clean" and "make all".
-#
-
+#  This file is based on the Makefile found here: http://www.codeforge.com/read/77250/makefile__html
+#  
 ##############################################################################################
-# Start of user section
+# 
+#  Available targets:
 #
+#  make all = Build elf file
+#  make bin = Build and convert to binary file
+#  make crc = Build, convert to binary and add checksum
+#  make flash = Build, convert to binary, add checksum and copy to USB device
+#  make size = Show size usage
+#  make objdump = Dump objects to objdump.txt
+#  make clean = Clean project
+#
+##############################################################################################
 
 # Define project name and MCU here
 PROJECT        = gpstracker
@@ -64,12 +70,8 @@ ULIBS =
 OPT = -O1
 
 #
-# End of user defines
+# End of configuration section
 ##############################################################################################
-
-##############################################################################################
-# Start of default section
-#
 
 TRGT = arm-none-eabi-
 CC   = $(TRGT)gcc
@@ -97,12 +99,6 @@ DLIBDIR =
 # List all default libraries here
 DLIBS = 
 
-#
-# End of default section
-##############################################################################################
-
-
-###
 # Color definitions
 
 NO_COLOR=\x1b[0m
@@ -147,8 +143,8 @@ DEVICE = $(shell df -h | awk '/CRP DISABLD$$/ {print $$1}')
 # Generate dependency information
 CPFLAGS += -MD -MP -MF .dep/$(@F).d
 
-#
-# makefile rules
+##############################################################################################
+# Rules section
 #
 
 all: $(OBJS) $(PROJECT).elf $(PROJECT).hex
@@ -267,5 +263,3 @@ endif
 # Include the dependency files, should be the last of the makefile
 #
 -include $(shell mkdir .dep 2>/dev/null) $(wildcard .dep/*)
-
-# *** EOF ***

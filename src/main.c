@@ -1,26 +1,13 @@
-/***********************************************************************
-* $Id:: main.c 221 2012-01-13 02:54:53Z usb06052                              $
-*
-* Project: USB device ROM Stack test module
-*
-* Description:
-*     USB Communication Device Class User module.
-*
-***********************************************************************
-*   Copyright(C) 2011, NXP Semiconductor
-*   All rights reserved.
-*
-* Software that is described herein is for illustrative purposes only
-* which provides customers with programming information regarding the
-* products. This software is supplied "AS IS" without any warranties.
-* NXP Semiconductors assumes no responsibility or liability for the
-* use of the software, conveys no license or title under any patent,
-* copyright, or mask work right to the product. NXP Semiconductors
-* reserves the right to make changes in the software without
-* notification. NXP Semiconductors also make no representation or
-* warranty that such application will be suitable for the specified
-* use without further testing or modification.
-**********************************************************************/
+/* 
+ *  main.c
+ *  
+ *  Created by Jens Willy Johannsen on 2012-08-14.
+ *
+ *  This file is released under Creative Commons – Attribution 3.0 Unported (CC BY 3.0)
+ *  http://creativecommons.org/licenses/by/3.0/
+ *
+ */
+
 #include <string.h>
 #include <stdint.h>
 #include "LPC11Uxx.h"            
@@ -75,9 +62,6 @@ void parseCommand(void)
 	state = StateIdle;
 }
 
-/*****************************************************************************
-**   Main Function  main()
-*****************************************************************************/
 int main (void)
 {
     SystemCoreClockUpdate ();
@@ -134,7 +118,3 @@ void USB_CDC_receive( uint8_t *bufferPtr, uint32_t length )
 	// Data received: echo
 //	USB_CDC_send( bufferPtr, length );
 }
-
-/**********************************************************************
- **                            End Of File
- **********************************************************************/

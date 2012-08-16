@@ -3,7 +3,7 @@
  *  
  *  Created by Jens Willy Johannsen on 2012-08-14.
  *
- *  This file is released under Creative Commons – Attribution 3.0 Unported (CC BY 3.0)
+ *  This file is released under Creative Commons - Attribution 3.0 Unported (CC BY 3.0)
  *  http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -13,6 +13,7 @@
 #include "LPC11Uxx.h"            
 #include "usb_cdc.h"
 #include "eeprom.h"
+#include "cmdparser.h"
 
 enum
 {
@@ -50,6 +51,10 @@ void parseCommand(void)
 		// TEMP: write EEPROM
 		writeEEPROM( (uint8_t*)0, (uint8_t*)commandBuffer+11, 4 );	// Write 4 bytes to EEPROM offset 0 from commandBuffer+11
 		USB_CDC_print( "EEPROM set.\r\n" );
+	}
+	else if( strncasecmp( "sys test", (char*)commandBuffer, 8 ) == 0 )
+	{
+		testcommandparse();
 	}
 	else
 	{

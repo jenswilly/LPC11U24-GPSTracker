@@ -31,6 +31,8 @@ SYSCALLS	   = 0
 # Use '.' for no common dir. Do not use trailing slash
 COMMONDIR	   = ./common_LPC11U24
 
+BINPATH = /Applications/yagarto-4.7.1/bin/
+
 # Define linker script file here
 LDSCRIPT = $(COMMONDIR)/LPC11U24.ld
 
@@ -76,9 +78,9 @@ OPT = -O1
 ##############################################################################################
 
 TRGT = arm-none-eabi-
-CC   = $(TRGT)gcc
-CP   = $(TRGT)objcopy
-AS   = $(TRGT)gcc -x assembler-with-cpp
+CC   = $(BINPATH)$(TRGT)gcc
+CP   = $(BINPATH)$(TRGT)objcopy
+AS   = $(BINPATH)$(TRGT)gcc -x assembler-with-cpp
 BIN  = $(CP) -O ihex 
 ECHO = echo
 CAT  = cat
@@ -108,16 +110,17 @@ OK_COLOR=\x1b[32;01m
 ERROR_COLOR=\x1b[31;01;47m
 WARN_COLOR=\x1b[33;01m
 
-OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
-ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
-WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
-DONE_STRING=$(OK_COLOR)[Done]$(NO_COLOR)
+#
+#OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
+#ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
+#WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
+#DONE_STRING=$(OK_COLOR)[Done]$(NO_COLOR)
 
 # Use these color definitions for Eclipse projects
-#OK_STRING=[OK]
-#ERROR_STRING=[ERRORS]
-#WARN_STRING=[WARNINGS]
-#DONE_STRING=[Done]
+OK_STRING=[OK]
+ERROR_STRING=[ERRORS]
+WARN_STRING=[WARNINGS]
+DONE_STRING=[Done]
 
 # End of color definitions
 ###
@@ -155,15 +158,15 @@ bin: $(OBJS) $(PROJECT).bin size clean-intermediates
 
 size:
 	@$(ECHO) Size:
-	@arm-none-eabi-size $(PROJECT).elf
+	@$(BINPATH)arm-none-eabi-size $(PROJECT).elf
 
 objdump:
-	arm-none-eabi-objdump -x -d $(PROJECT).elf >objdump.txt
+	$(BINPATH)arm-none-eabi-objdump -x -d $(PROJECT).elf >objdump.txt
 
 crc: bin
 ifeq ($(USE_COLORS),1)
 	@$(ECHO) -n Adding checksum to $(PROJECT).bin...
-	@crc $(PROJECT).bin 2> temp.log || touch temp.errors
+	@$(BINPATH)crc $(PROJECT).bin 2> temp.log || touch temp.errors
 	@if test -e temp.errors; then $(ECHO) "$(ERROR_STRING)" && $(CAT) temp.log; elif test -s temp.log; then $(ECHO) "$(WARN_STRING)" && $(CAT) temp.log; else $(ECHO) "$(DONE_STRING)"; fi;
 	@rm -f temp.errors temp.log
 else

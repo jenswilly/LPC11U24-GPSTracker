@@ -3,56 +3,52 @@
 
 <cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739" moduleId="org.eclipse.cdt.core.settings" name="Default">
+		<cconfiguration id="0.850735935">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.850735935" moduleId="org.eclipse.cdt.core.settings" name="Default">
+				<macros>
+					<stringListMacro name="PATH" type="VALUE_TEXT_LIST">
+						<value name="/usr/bin"/>
+						<value name="/bin"/>
+						<value name="/usr/sbin"/>
+						<value name="/sbin"/>
+						<value name="/Applications/yagarto-4.7.1/bin"/>
+					</stringListMacro>
+				</macros>
 				<externalSettings/>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration buildProperties="" description="" id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
-					<folderInfo id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739.817267583" name="/" resourcePath="">
-						<toolChain id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.887601960" name="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base">
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.processor.933206928" name="Processor" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.processor"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.thumb.2024558917" name="Thumb (-mthumb)" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.thumb"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.thumbinterwork.1667768123" name="Thumb interwork (-mthumb-interwork)" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.thumbinterwork"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.endiannes.1251582503" name="Endiannes" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.endiannes"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.fpu.abi.865927930" name="Float ABI" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.fpu.abi"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.fpu.unit.866451882" name="FPU Type" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.target.fpu.unit"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.level.1041665446" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.level"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.format.654144155" name="Debug format" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.format"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.other.1072287545" name="Other debugging flags" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.other"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.prof.1233697967" name="Generate prof information (-p)" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.prof"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.gprof.624966368" name="Generate gprof information (-pg)" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.debugging.gprof"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.addtools.createflash.1508466908" name="Create Flash Image" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.addtools.createflash"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.addtools.createlisting.1337958807" name="Create Extended Listing" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.addtools.createlisting"/>
-							<option id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.addtools.printsize.1755910042" name="Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.option.addtools.printsize"/>
-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.platform.base.731843777" isAbstract="false" name="Mac OS X Platform" osList="macosx" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.platform.base"/>
-							<builder id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.builder.base.1221413825" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="ARM Yagarto Mac OS X GNU Make builder" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.builder.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.assembler.base.1712490981" name="ARM Yagarto Mac OS X GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.assembler.base">
-								<inputType id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.assembler.base.input.2050314243" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.assembler.base.input"/>
-							</tool>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.compiler.base.673316434" name="ARM Yagarto Mac OS X GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.compiler.base">
-								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths.1637310051" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Users/jenswilly/Yagarto/yagarto-4.7.1/arm-none-eabi/include"/>
+				<configuration buildProperties="" description="" id="0.850735935" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.850735935." name="/" resourcePath="">
+						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.1484745081" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
+							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.1484745081.1265378957" name=""/>
+							<builder id="org.eclipse.cdt.build.core.settings.default.builder.1288040405" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.2122970546" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1989565269" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1758826068" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/Applications/yagarto-4.7.1/arm-none-eabi/include"/>
 								</option>
-								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.1385119852" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="__GNUC__=1"/>
-								</option>
-								<inputType id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.compiler.base.input.1220666620" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.compiler.base.input"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.338575920" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.cpp.compiler.base.504521591" name="ARM Yagarto Mac OS X GCC C++ Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.cpp.compiler.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.linker.base.154482976" name="ARM Yagarto Mac OS X GCC C Linker" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.linker.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.cpp.linker.base.1301640689" name="ARM Yagarto Mac OS X GCC C++ Linker" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.cpp.linker.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.archiver.base.475685635" name="ARM Yagarto Mac OS X GCC Archiver" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.archiver.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.createflash.base.2048429416" name="ARM Yagarto Mac OS X GNU Create Flash Image" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.createflash.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.createlisting.base.605370959" name="ARM Yagarto Mac OS X GNU Create Listing" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.createlisting.base"/>
-							<tool id="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.printsize.base.1862185185" name="ARM Yagarto Mac OS X GNU Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.printsize.base"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.690254288" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1089546593" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/Applications/yagarto-4.7.1/arm-none-eabi/include"/>
+								</option>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.653222731" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+							</tool>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.605886529" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.111016234" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/Applications/yagarto-4.7.1/arm-none-eabi/include"/>
+								</option>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.166284194" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+							</tool>
 						</toolChain>
 					</folderInfo>
 				</configuration>
@@ -61,13 +57,20 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="GPSTracker.null.441200470" name="GPSTracker"/>
+		<project id="GPSTracker.null.1858524067" name="GPSTracker"/>
 	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="0.850735935">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
 			<target name="bin" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 				<buildCommand>make</buildCommand>
-				<buildArguments/>
 				<buildTarget>bin</buildTarget>
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>true</useDefaultCommand>
@@ -75,24 +78,19 @@
 			</target>
 			<target name="clean" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 				<buildCommand>make</buildCommand>
-				<buildArguments/>
 				<buildTarget>clean</buildTarget>
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>true</useDefaultCommand>
 				<runAllBuilders>true</runAllBuilders>
 			</target>
+			<target name="crc" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildArguments/>
+				<buildTarget>crc</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
 		</buildTargets>
-	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="0.1863376754">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739;org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739.817267583;org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.compiler.base.673316434;org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.c.compiler.base.input.1220666620">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_YG_GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739;org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.toolchain.base.1054196739.817267583;org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.assembler.base.1712490981;org.eclipse.cdt.cross.arm.gnu.yagarto.macosx.assembler.base.input.2050314243">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_YG_GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>

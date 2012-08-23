@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 
-void do_testcmd( uint8_t *args );
+void sys_do_testcmd( char *args, char *output );
+void sys_do_version( char *args, char *output );
+void sys_do_eeprom( char *args, char *output );
 
 #endif /* SYS_COMMANDS_H_ */

@@ -26,7 +26,7 @@
 # Define project name and MCU here
 PROJECT        = gpstracker
 MCU			   = cortex-m0
-SYSCALLS	   = 0
+SYSCALLS	   = 1
 
 # Use '.' for no common dir. Do not use trailing slash
 COMMONDIR	   = ./common_LPC11U24
@@ -51,6 +51,7 @@ SRC  = $(COMMONDIR)/cmsis/core/core_cm0.c \
 	   $(COMMONDIR)/drivers/eeprom/eeprom.c \
 	   ./src/cmdparser.c \
 	   ./src/sys_commands.c \
+	   ./src/version.c \
        ./src/main.c
 
 # List ASM source files here
@@ -110,23 +111,23 @@ OK_COLOR=\x1b[32;01m
 ERROR_COLOR=\x1b[31;01;47m
 WARN_COLOR=\x1b[33;01m
 
-#
-#OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
-#ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
-#WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
-#DONE_STRING=$(OK_COLOR)[Done]$(NO_COLOR)
+# Normal color string
+OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
+ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
+WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
+DONE_STRING=$(OK_COLOR)[Done]$(NO_COLOR)
 
 # Use these color definitions for Eclipse projects
-OK_STRING=[OK]
-ERROR_STRING=[ERRORS]
-WARN_STRING=[WARNINGS]
-DONE_STRING=[Done]
+#OK_STRING=[OK]
+#ERROR_STRING=[ERRORS]
+#WARN_STRING=[WARNINGS]
+#DONE_STRING=[Done]
 
 # End of color definitions
 ###
 
 ifeq ($(SYSCALLS),1)
-	SRC += ./src/syscalls.c
+	SRC += $(COMMONDIR)/syscalls.c
 endif
 
 INCDIR  = $(patsubst %,-I%,$(DINCDIR) $(UINCDIR))
@@ -151,10 +152,21 @@ CPFLAGS += -MD -MP -MF .dep/$(@F).d
 ##############################################################################################
 # Rules section
 #
+# Name of text file containing build number.
+BUILD_NUMBER_FILE=build-number.txt
 
+update_version: $(BUILD_NUMBER_FILE)
+	@if ! test -f $(BUILD_NUMBER_FILE); then echo 0 > $(BUILD_NUMBER_FILE); fi
+	@echo $$(($$(cat $(BUILD_NUMBER_FILE)) + 1)) > $(BUILD_NUMBER_FILE)
+	@echo -n Build number:
+	@cat $(BUILD_NUMBER_FILE) 
+	git rev-parse HEAD | awk ' BEGIN {print "#include \"version.h\""} {print "const char *build_git_sha = \"" $$0"\";"} END {}' > src/version.c
+	date +'%Y-%m-%d %H:%M:%S %z' | awk 'BEGIN {} {print "const char *build_date = \""$$0"\";"} END {} ' >> src/version.c
+	cat $(BUILD_NUMBER_FILE) | awk 'BEGIN {} {print "const char *build_number = \""$$0"\";"} END {} ' >> src/version.c
+    
 all: $(OBJS) $(PROJECT).elf $(PROJECT).hex
 
-bin: $(OBJS) $(PROJECT).bin size clean-intermediates
+bin: update_version $(OBJS) $(PROJECT).bin size clean-intermediates
 
 size:
 	@$(ECHO) Size:

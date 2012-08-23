@@ -10,20 +10,23 @@
 
 #include <stdint.h>
 
-void testcommandparse(void);
+// Size of the output buffer. Use the sniprintf() or snprintf() function to be sure not to exceed the buffer size
+#define OUTPUT_BUFFER_SIZE 100
 
+void testcommandparse( void );
+int parsecommandline( uint8_t* buffer );
 
-#define CMD(name)	extern void name( uint8_t* parameter );
+#define CMD(name)	extern void name( char* parameter, char* output_buffer );
 
 // SYS commands
-CMD( do_testcmd );
-CMD( do_restart_all );
-CMD( do_pwr_report );
+CMD( sys_do_testcmd );
+CMD( sys_do_version );
+CMD( sys_do_eeprom );
 
 // GSM commands
-CMD( do_gsm_stat );
+// ...
 
 // GPS commands
-CMD( do_gps_stat );
+// ...
 
 #endif

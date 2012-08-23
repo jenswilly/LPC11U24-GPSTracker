@@ -6,10 +6,40 @@
  */
 
 #include "sys_commands.h"
-extern void USB_CDC_print( char* string );	// From main.c
+#include "cmdparser.h"		// For OUTPUT_BUFFER_SIZE
+#include <stdio.h>
+#include "version.h"
+#include "eeprom.h"
 
-void do_testcmd( uint8_t *args )
+/* Writes back a simple test string.
+ */
+void sys_do_testcmd( char *args, char *output )
 {
-	// Print msg
-	USB_CDC_print( "Response from SYS TEST\r\n" );
+	sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - Response from SYS TEST\r\n" );
+}
+
+/* Returns (i.e. filles the provided output buffer with) firmware name and current info.
+ */
+void sys_do_version( char *args, char *output )
+{
+	sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - b%s on %s, git %s\r\n", build_number, build_date, build_git_sha );
+}
+
+/* Reads or sets EEPROM values. No args=show contents; args=store contents.
+ * Fours bytes are stored at EEPROM offset 0.
+ */
+void sys_do_eeprom( char *args, char *output )
+{
+	// If we have no args, show the contents
+	if( args == 0 )
+	{
+		char eeprom[4] = "----";
+		readEEPROM( (uint8_t*)0, (uint8_t*)eeprom, 4 );		// Read 4 bytes from EEPROM offset 0
+		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - EEPROM contents: %s\r\n", eeprom );
+		return;
+	}
+
+	// We have args: store the first 4 characters in the eeprom
+	writeEEPROM( (uint8_t*)0, args, 4 );	// Write 4 bytes to EEPROM offset 0
+	sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - EEPROM set: %s\r\n", args );
 }

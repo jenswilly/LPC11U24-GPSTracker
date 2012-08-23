@@ -52,15 +52,18 @@ void parseCommand(void)
 		writeEEPROM( (uint8_t*)0, (uint8_t*)commandBuffer+11, 4 );	// Write 4 bytes to EEPROM offset 0 from commandBuffer+11
 		USB_CDC_print( "EEPROM set.\r\n" );
 	}
-	else if( strncasecmp( "sys test", (char*)commandBuffer, 8 ) == 0 )
+	else
 	{
-		testcommandparse();
+		if( parsecommandline( commandBuffer ) != 0 )
+			USB_CDC_print( "ERROR in command parser.\r\n" );
 	}
+	/*
 	else
 	{
 		// Unknown command
 		USB_CDC_print( "ERROR unknown command\r\n" );
 	}
+	*/
 
 	// Reset command buffer and state
 	commandBufferPtr = 0;

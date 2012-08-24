@@ -8,8 +8,6 @@
 #ifndef SYS_COMMANDS_H_
 #define SYS_COMMANDS_H_
 
-#include <stdint.h>
-
 void sys_do_testcmd( char *args, char *output );
 void sys_do_version( char *args, char *output );
 void sys_do_eeprom( char *args, char *output );

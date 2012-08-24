@@ -11,15 +11,11 @@
 #include <string.h>
 #include <stdint.h>
 #include "LPC11Uxx.h"            
+#include "main.h"
 #include "usb_cdc.h"
 #include "eeprom.h"
 #include "cmdparser.h"
-
-enum
-{
-	StateIdle,
-	StateCmdReceived,	// Entire command received: go parse it
-};
+#include "gps.h"
 
 #define CMD_BUF_SIZE 200
 uint8_t commandBuffer[CMD_BUF_SIZE];
@@ -38,32 +34,16 @@ void USB_CDC_print( char* string )
  */
 void parseCommand(void)
 {
-	if( strncasecmp( "show eeprom", (char*)commandBuffer, 11 ) == 0 )
+	if( strncasecmp( "test", (char*)commandBuffer, 4 ) == 0 )
 	{
-		// TEMP: show EEPROM contents
-		char output[] = "EEPROM contents:----\r\n";
-		readEEPROM( (uint8_t*)0, (uint8_t*)output+16, 4 );		// Read 4 bytes from EEPROM offset 0 into output[16] to [19]
-
-		USB_CDC_send( (uint8_t*)output, 22 );
-	}
-	else if( strncasecmp( "set eeprom=", (char*)commandBuffer, 11 ) == 0 )
-	{
-		// TEMP: write EEPROM
-		writeEEPROM( (uint8_t*)0, (uint8_t*)commandBuffer+11, 4 );	// Write 4 bytes to EEPROM offset 0 from commandBuffer+11
-		USB_CDC_print( "EEPROM set.\r\n" );
+		// TEMP: show test response
+		USB_CDC_print( "TEST response.\r\n" );
 	}
 	else
 	{
 		if( parsecommandline( commandBuffer ) != 0 )
 			USB_CDC_print( "ERROR in command parser.\r\n" );
 	}
-	/*
-	else
-	{
-		// Unknown command
-		USB_CDC_print( "ERROR unknown command\r\n" );
-	}
-	*/
 
 	// Reset command buffer and state
 	commandBufferPtr = 0;
@@ -94,6 +74,16 @@ int main (void)
 				parseCommand();
 				break;
 
+			case StateGPSLineReceived:
+				// Should we echo?
+				if( gps_rawecho != 0 )
+				{
+					// Yes: echo on USB (the GPS buffer is properly 0-terminated)
+					USB_CDC_print( gps_buffer );
+					state = StateIdle;
+				}
+				break;
+
 			default:
 				break;
 		}
@@ -122,7 +112,4 @@ void USB_CDC_receive( uint8_t *bufferPtr, uint32_t length )
 	if( commandBuffer[ commandBufferPtr-1 ] == '\n' )
 		// Yes, we have: parse the command
 		state = StateCmdReceived;
-
-	// Data received: echo
-//	USB_CDC_send( bufferPtr, length );
 }

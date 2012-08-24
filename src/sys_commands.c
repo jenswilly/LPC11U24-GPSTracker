@@ -30,16 +30,18 @@ void sys_do_version( char *args, char *output )
  */
 void sys_do_eeprom( char *args, char *output )
 {
-	// If we have no args, show the contents
+	// Arguments?
 	if( args == 0 )
 	{
+		// No arguments: display contents
 		char eeprom[4] = "----";
 		readEEPROM( (uint8_t*)0, (uint8_t*)eeprom, 4 );		// Read 4 bytes from EEPROM offset 0
 		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - EEPROM contents: %s\r\n", eeprom );
-		return;
 	}
-
-	// We have args: store the first 4 characters in the eeprom
-	writeEEPROM( (uint8_t*)0, args, 4 );	// Write 4 bytes to EEPROM offset 0
-	sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - EEPROM set: %s\r\n", args );
+	else
+	{
+		// Arguments: write first four bytes
+		writeEEPROM( (uint8_t*)0, (uint8_t*)args, 4 );	// Write 4 bytes to EEPROM offset 0
+		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - EEPROM set: %s\r\n", args );
+	}
 }

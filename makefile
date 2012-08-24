@@ -49,8 +49,10 @@ SRC  = $(COMMONDIR)/cmsis/core/core_cm0.c \
 	   $(COMMONDIR)/drivers/usb/cdc_desc.c \
 	   $(COMMONDIR)/drivers/usb_cdc/usb_cdc.c \
 	   $(COMMONDIR)/drivers/eeprom/eeprom.c \
+	   $(COMMONDIR)/drivers/soft_uart/lpc_swu.c \
 	   ./src/cmdparser.c \
 	   ./src/sys_commands.c \
+	   ./src/gps.c \
 	   ./src/version.c \
        ./src/main.c
 
@@ -63,6 +65,7 @@ UINCDIR = ./src \
           $(COMMONDIR)/cmsis/device \
           $(COMMONDIR)/drivers/eeprom \
           $(COMMONDIR)/drivers/usb_cdc \
+          $(COMMONDIR)/drivers/soft_uart \
 		  $(COMMONDIR)/drivers/usb
 
 # List the user directory to look for the libraries here
@@ -160,9 +163,9 @@ update_version: $(BUILD_NUMBER_FILE)
 	@echo $$(($$(cat $(BUILD_NUMBER_FILE)) + 1)) > $(BUILD_NUMBER_FILE)
 	@echo -n Build number:
 	@cat $(BUILD_NUMBER_FILE) 
-	git rev-parse HEAD | awk ' BEGIN {print "#include \"version.h\""} {print "const char *build_git_sha = \"" $$0"\";"} END {}' > src/version.c
-	date +'%Y-%m-%d %H:%M:%S %z' | awk 'BEGIN {} {print "const char *build_date = \""$$0"\";"} END {} ' >> src/version.c
-	cat $(BUILD_NUMBER_FILE) | awk 'BEGIN {} {print "const char *build_number = \""$$0"\";"} END {} ' >> src/version.c
+	@git rev-parse HEAD | awk ' BEGIN {print "#include \"version.h\""} {print "const char *build_git_sha = \"" $$0"\";"} END {}' > src/version.c
+	@date +'%Y-%m-%d %H:%M:%S %z' | awk 'BEGIN {} {print "const char *build_date = \""$$0"\";"} END {} ' >> src/version.c
+	@cat $(BUILD_NUMBER_FILE) | awk 'BEGIN {} {print "const char *build_number = \""$$0"\";"} END {} ' >> src/version.c
     
 all: $(OBJS) $(PROJECT).elf $(PROJECT).hex
 

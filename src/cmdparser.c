@@ -34,6 +34,8 @@ static Command sys_commands[] =
 
 static Command gsm_commands[] =
 {
+	{"init", 0, gps_do_init },			// GPS INIT
+	{"rawecho", 0, gps_do_rawecho },	// GPS RAWECHO[=1/0]
 	{0,0,0}
 };
 

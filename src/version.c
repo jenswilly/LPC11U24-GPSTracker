@@ -1,4 +1,4 @@
 #include "version.h"
-const char *build_git_sha = "e3496028abebe3fc7aa73c72aa73e3e694f80cf7";
-const char *build_date = "2012-08-24 00:49:12 +0200";
-const char *build_number = "15";
+const char *build_git_sha = "d87dbaa26efa9ffe29faf92ecc817e0af74068b7";
+const char *build_date = "2012-08-24 15:26:21 +0200";
+const char *build_number = "23";

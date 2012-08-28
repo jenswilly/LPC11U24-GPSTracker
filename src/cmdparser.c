@@ -9,7 +9,7 @@
 #include <strings.h>
 extern void USB_CDC_print( char* string );	// From main.c
 
-static char response_buffer[ OUTPUT_BUFFER_SIZE ];
+char response_buffer[ OUTPUT_BUFFER_SIZE ];
 
 typedef struct
 {
@@ -34,13 +34,13 @@ static Command sys_commands[] =
 
 static Command gsm_commands[] =
 {
-	{"init", 0, gps_do_init },			// GPS INIT
-	{"rawecho", 0, gps_do_rawecho },	// GPS RAWECHO[=1/0]
 	{0,0,0}
 };
 
 static Command gps_commands[] =
 {
+	{"init", 0, gps_do_init },		// GPS INIT
+	{"echo", 0, gps_do_rawecho },	// GPS ECHO[=1/0]
 	{0,0,0}
 };
 

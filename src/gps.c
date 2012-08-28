@@ -13,31 +13,43 @@
 #include "cmdparser.h"		// For OUTPUT_BUFFER_SIZE
 #include "lpc_swu.h"
 #include "main.h"
+#include "usb_cdc.h"
 
-#define GPS_BUFFER_SIZE 100
+#define GPS_BUFFER_SIZE 500
 char gps_buffer[ GPS_BUFFER_SIZE ];
 volatile uint16_t gps_buffer_ptr;
 volatile uint8_t gps_rawecho;
 
-/* Soft UART data received callback.
+/* CT32B0 interrupt handler.
+ * Calls soft UART functions.
  */
-void swu_rx_callback(void)
+void TIMER32_0_IRQHandler( void )
 {
-	unsigned char data = swu_rx_chr();
+	swu_isr_rx( LPC_CT32B0 );
+	swu_isr_tx( LPC_CT32B0 );
+}
 
-	// We'll ignore any \r
-	if( data == '\r' )
-		return;
+void UART_IRQHandler(void)
+{
+	unsigned char data = LPC_USART->RBR;
 
 	// If it's \n, we'll terminate the string and change state to GPS line received.
 	if( data == '\n' )
 	{
-		gps_buffer[ gps_buffer_ptr ] = 0;
-		state = StateGPSLineReceived;
+		// Terminate string and copy to output buffer
+		if( gps_rawecho ==  1)
+		{
+			gps_buffer[ gps_buffer_ptr++ ] = data;
+			gps_buffer[ gps_buffer_ptr++ ] = '\0';
+
+			memcpy( response_buffer, gps_buffer, gps_buffer_ptr );
+		}
 
 		// And reset the buffer pointer
 		gps_buffer_ptr = 0;
 
+		// Set state
+		state = StateGPSLineReceived;
 		return;
 	}
 
@@ -49,14 +61,53 @@ void swu_rx_callback(void)
 		gps_buffer_ptr = 0;
 }
 
+/* Soft UART data received callback.
+ */
+/*
+void swu_rx_callback(void)
+{
+	unsigned char data = swu_rx_chr();
+
+	// We'll ignore any \r
+//	if( data == '\r' )
+//		return;
+
+	// If it's \n, we'll terminate the string and change state to GPS line received.
+	if( data == '\n' )
+	{
+		// Terminate string and copy to output buffer
+		if( gps_rawecho ==  1)
+		{
+			gps_buffer[ gps_buffer_ptr++ ] = data;
+			gps_buffer[ gps_buffer_ptr++ ] = '\0';
+
+			memcpy( response_buffer, gps_buffer, gps_buffer_ptr );
+		}
+
+		// And reset the buffer pointer
+		gps_buffer_ptr = 0;
+
+		// Set state
+		state = StateGPSLineReceived;
+		return;
+	}
+
+	// Otherwise, we got a normal character: append it to the buffer
+	gps_buffer[ gps_buffer_ptr++ ] = data;
+
+	// Check overflow
+	if( gps_buffer_ptr >= GPS_BUFFER_SIZE )
+		gps_buffer_ptr = 0;
+}
+*/
 void gps_init( void )
 {
-	// Initialize soft UART using CT32B0 timer
-	swu_init( LPC_CT32B0 );
-
 	// Initialize buffer pointer and rawecho state
 	gps_buffer_ptr = 0;
 	gps_rawecho = 0;
+
+	// Zero buffer
+    memset( gps_buffer, GPS_BUFFER_SIZE, 0 );
 }
 
 void gps_do_init( char *args, char *output )
@@ -81,9 +132,9 @@ void gps_do_rawecho( char *args, char *output )
 
 	// And print current value. We'll do that whether we got arguments or not
 	if( gps_rawecho == 0 )
-		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - GPS echo is OFF" );
+		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - GPS echo is OFF\r\n" );
 	else
-		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - GPS echo is ON" );
+		sniprintf( output, OUTPUT_BUFFER_SIZE, "OK - GPS echo is ON\r\n" );
 }
 
 

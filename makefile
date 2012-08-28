@@ -50,6 +50,7 @@ SRC  = $(COMMONDIR)/cmsis/core/core_cm0.c \
 	   $(COMMONDIR)/drivers/usb_cdc/usb_cdc.c \
 	   $(COMMONDIR)/drivers/eeprom/eeprom.c \
 	   $(COMMONDIR)/drivers/soft_uart/lpc_swu.c \
+	   $(COMMONDIR)/drivers/uart/uart.c \
 	   ./src/cmdparser.c \
 	   ./src/sys_commands.c \
 	   ./src/gps.c \
@@ -66,6 +67,7 @@ UINCDIR = ./src \
           $(COMMONDIR)/drivers/eeprom \
           $(COMMONDIR)/drivers/usb_cdc \
           $(COMMONDIR)/drivers/soft_uart \
+          $(COMMONDIR)/drivers/uart \
 		  $(COMMONDIR)/drivers/usb
 
 # List the user directory to look for the libraries here

@@ -12,6 +12,8 @@
 
 // Size of the output buffer. Use the sniprintf() or snprintf() function to be sure not to exceed the buffer size
 #define OUTPUT_BUFFER_SIZE 100
+extern char response_buffer[];
+
 
 void testcommandparse( void );
 int parsecommandline( uint8_t* buffer );

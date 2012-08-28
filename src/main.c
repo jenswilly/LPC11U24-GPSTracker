@@ -16,8 +16,10 @@
 #include "eeprom.h"
 #include "cmdparser.h"
 #include "gps.h"
+#include "lpc_swu.h"
+#include "uart.h"
 
-#define CMD_BUF_SIZE 200
+#define CMD_BUF_SIZE 50
 uint8_t commandBuffer[CMD_BUF_SIZE];
 volatile uint16_t commandBufferPtr;
 volatile uint16_t state;
@@ -26,14 +28,18 @@ volatile uint16_t state;
  */
 void USB_CDC_print( char* string )
 {
-	USB_CDC_send( (uint8_t*)string, strlen( string ));
-//	USB_CDC_send( (uint8_t*)"\r\n", 2 );
+//	USB_CDC_send( (uint8_t*)string, strlen( string ));
+//	UARTSend( (uint8_t*)string, strlen( string ));
+	swu_tx_str( (unsigned char const*)string );
 }
 
 /* Parse the command in the command buffer and perform required operations.
  */
 void parseCommand(void)
 {
+	if( commandBufferPtr == 0 )
+		return;
+
 	if( strncasecmp( "test", (char*)commandBuffer, 4 ) == 0 )
 	{
 		// TEMP: show test response
@@ -53,7 +59,12 @@ void parseCommand(void)
 int main (void)
 {
     SystemCoreClockUpdate ();
-    USB_CDC_init();
+//    USB_CDC_init();
+    UARTInit( 9600 );
+
+    gps_init();
+	// Initialize soft UART using CT32B0 timer
+	swu_init( LPC_CT32B0 );
 
     // Init state machine
     state = StateIdle;
@@ -63,7 +74,7 @@ int main (void)
     commandBufferPtr = 0;
 
     // Send "ready"
- //   USB_CDC_send( (uint8_t*)"Ready...\r\n", 10 );
+    USB_CDC_print( "Ready...\r\n" );
 
 	// Empty main loop
 	while( 1 )
@@ -76,12 +87,12 @@ int main (void)
 
 			case StateGPSLineReceived:
 				// Should we echo?
-				if( gps_rawecho != 0 )
+				if( gps_rawecho == 1 )
 				{
 					// Yes: echo on USB (the GPS buffer is properly 0-terminated)
-					USB_CDC_print( gps_buffer );
-					state = StateIdle;
+					USB_CDC_print( response_buffer );
 				}
+				state = StateIdle;
 				break;
 
 			default:
@@ -90,6 +101,63 @@ int main (void)
 	}
 }
 
+/* Receive command data from USART.
+ */
+/*
+void UART_IRQHandler(void)
+{
+	// Prevent buffer overflow
+	if( commandBufferPtr + 1 > CMD_BUF_SIZE )
+	{
+		// Overflow: ignore this entire chunk (since it will be invalid anyway) and send error
+		USB_CDC_print( "ERROR command buffer overflow!\r\n" );
+
+		// Reset command buffer
+		commandBufferPtr = 0;
+		return;
+	}
+
+	// No overflow: copy data into command buffer
+	commandBuffer[ commandBufferPtr++ ] = LPC_USART->RBR;
+
+	// Check if we have received \n to terminate command
+	if( commandBuffer[ commandBufferPtr-1 ] == '\n' )
+		// Yes, we have: parse the command
+		state = StateCmdReceived;
+}
+*/
+
+/* Receive command data from soft UART
+ */
+void swu_rx_callback(void)
+{
+	// Echo
+	unsigned char data = swu_rx_chr();
+	swu_tx_chr( data );
+
+	// Prevent buffer overflow
+	if( commandBufferPtr + 1 > CMD_BUF_SIZE )
+	{
+		// Overflow: ignore this entire chunk (since it will be invalid anyway) and send error
+		USB_CDC_print( "ERROR command buffer overflow!\r\n" );
+
+		// Reset command buffer
+		commandBufferPtr = 0;
+		return;
+	}
+
+	// No overflow: copy data into command buffer
+	commandBuffer[ commandBufferPtr++ ] = data;
+
+	// Check if we have received \n to terminate command
+	if( commandBuffer[ commandBufferPtr-1 ] == '\n' )
+		// Yes, we have: parse the command
+		state = StateCmdReceived;
+}
+
+/* Receive command data from USB CDC.
+ */
+/*
 void USB_CDC_receive( uint8_t *bufferPtr, uint32_t length )
 {
 	// Copy into command buffer
@@ -113,3 +181,4 @@ void USB_CDC_receive( uint8_t *bufferPtr, uint32_t length )
 		// Yes, we have: parse the command
 		state = StateCmdReceived;
 }
+*/

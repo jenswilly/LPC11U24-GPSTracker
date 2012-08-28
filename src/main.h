@@ -12,7 +12,9 @@ enum
 {
 	StateIdle,
 	StateCmdReceived,		// Entire command received: go parse it
-	StateGPSLineReceived	// Line received from GPS: parse it
+	StateGPSLineReceived,	// Line received from GPS: parse it
+	StateGPSParseGSV,
+	StateGPSParseRMC
 };
 
 // Global vars

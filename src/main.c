@@ -60,9 +60,10 @@ int main (void)
 {
     SystemCoreClockUpdate ();
 //    USB_CDC_init();
+    gps_init();
+
     UARTInit( 9600 );
 
-    gps_init();
 	// Initialize soft UART using CT32B0 timer
 	swu_init( LPC_CT32B0 );
 
@@ -92,6 +93,18 @@ int main (void)
 					// Yes: echo on USB (the GPS buffer is properly 0-terminated)
 					USB_CDC_print( response_buffer );
 				}
+				state = StateIdle;
+				break;
+
+			case StateGPSParseGSV:
+				// Complete GSV message received Ð parse it
+				parse_GSV();
+				state = StateIdle;
+				break;
+
+			case StateGPSParseRMC:
+				// Complete RMC message received Ð parse it
+				parse_RMC();
 				state = StateIdle;
 				break;
 

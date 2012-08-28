@@ -31,5 +31,6 @@ CMD( sys_do_eeprom );
 // GPS commands
 CMD( gps_do_init );
 CMD( gps_do_rawecho );
+CMD( gps_do_status );
 
 #endif

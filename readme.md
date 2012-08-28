@@ -22,6 +22,13 @@ The `make flash` will attempt to find a filesystem mounted as `CRP DISABLD`, the
 3. `make flash`
 4. Reset MCU
 
+Manual flashing can be done by identifying the device for the `CRP DISABLD` disk, unmounting it and then copying data:
+
+	$ df -h
+	$ diskutil unmount /dev/disk1
+	$ sudo dd if=gpstracker.bin of=/dev/disk1 seek=4
+
+
 ## Eclipse issues
 In order to work properly as an Eclipse project (Makefile Project with Existing Code), the following changes have been made:
 

@@ -39,8 +39,9 @@ static Command gsm_commands[] =
 
 static Command gps_commands[] =
 {
-	{"init", 0, gps_do_init },		// GPS INIT
-	{"echo", 0, gps_do_rawecho },	// GPS ECHO[=1/0]
+	{"init", 	0, gps_do_init },		// GPS INIT
+	{"echo", 	0, gps_do_rawecho },	// GPS ECHO[=1/0]
+	{"status",	0, gps_do_status },		// GPS STATUS
 	{0,0,0}
 };
 

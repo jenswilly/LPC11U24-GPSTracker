@@ -28,9 +28,9 @@ volatile uint16_t state;
  */
 void USB_CDC_print( char* string )
 {
-//	USB_CDC_send( (uint8_t*)string, strlen( string ));
+	USB_CDC_send( (uint8_t*)string, strlen( string ));
 //	UARTSend( (uint8_t*)string, strlen( string ));
-	swu_tx_str( (unsigned char const*)string );
+//	swu_tx_str( (unsigned char const*)string );
 }
 
 /* Parse the command in the command buffer and perform required operations.
@@ -59,13 +59,13 @@ void parseCommand(void)
 int main (void)
 {
     SystemCoreClockUpdate ();
-//    USB_CDC_init();
+    USB_CDC_init();
     gps_init();
 
     UARTInit( 9600 );
 
 	// Initialize soft UART using CT32B0 timer
-	swu_init( LPC_CT32B0 );
+//	swu_init( LPC_CT32B0 );
 
     // Init state machine
     state = StateIdle;
@@ -142,6 +142,7 @@ void UART_IRQHandler(void)
 
 /* Receive command data from soft UART
  */
+/*
 void swu_rx_callback(void)
 {
 	// Echo
@@ -167,10 +168,10 @@ void swu_rx_callback(void)
 		// Yes, we have: parse the command
 		state = StateCmdReceived;
 }
+*/
 
 /* Receive command data from USB CDC.
  */
-/*
 void USB_CDC_receive( uint8_t *bufferPtr, uint32_t length )
 {
 	// Copy into command buffer
@@ -194,4 +195,4 @@ void USB_CDC_receive( uint8_t *bufferPtr, uint32_t length )
 		// Yes, we have: parse the command
 		state = StateCmdReceived;
 }
-*/
+

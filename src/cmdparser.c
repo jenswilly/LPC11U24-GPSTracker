@@ -7,24 +7,26 @@
 
 #include "cmdparser.h"
 #include <strings.h>
+#include <stdio.h>
+
 extern void USB_CDC_print( char* string );	// From main.c
 
 char response_buffer[ OUTPUT_BUFFER_SIZE ];
 
 typedef struct
 {
-	char *command_name;						// Name of command
-	uint8_t permissions;					// Permissions flags
-	void (*handler)(char*, char*);	// Handler function of type void handler( uint8_t* args, uint8_t* output )
+	const char *command_name;			// Name of command
+	uint8_t permissions;				// Permissions flags
+	void (*handler)(char*, char*);		// Handler function of type void handler( uint8_t* args, uint8_t* output )
 } Command;
 
 typedef struct
 {
-	char *component_name;		// Name of component
-	Command *command_table;		// Pointer to the command table (array of Command structures)
+	const char *component_name;			// Name of component
+	const Command *command_table;		// Pointer to the command table (array of Command structures)
 } Component;
 
-static Command sys_commands[] =
+const Command sys_commands[] =
 {
 	{"test",	0,	sys_do_testcmd },
 	{"version",	0,	sys_do_version },
@@ -32,12 +34,12 @@ static Command sys_commands[] =
 	{0,0,0}
 };
 
-static Command gsm_commands[] =
+const Command gsm_commands[] =
 {
 	{0,0,0}
 };
 
-static Command gps_commands[] =
+const Command gps_commands[] =
 {
 	{"init", 	0, gps_do_init },		// GPS INIT
 	{"echo", 	0, gps_do_rawecho },	// GPS ECHO[=1/0]
@@ -45,7 +47,7 @@ static Command gps_commands[] =
 	{0,0,0}
 };
 
-static Component components[] =
+const Component components[] =
 {
 	{"sys", 	sys_commands },
 	{"gsm", 	gsm_commands },
@@ -55,10 +57,10 @@ static Component components[] =
 
 /* Returns a pointer to a command structure matching the specified name in the specified command table.
  */
-Command* findcommand( char *command_name, Command *command_table )
+const Command* findcommand( char *command_name, const Command *command_table )
 {
 	// Iterate all commands in the command table
-	Command *command = command_table;
+	const Command *command = command_table;
 	while( command->command_name )
 	{
 		// See if name matches
@@ -76,10 +78,11 @@ Command* findcommand( char *command_name, Command *command_table )
 /* Returns a pointer to a component structure based on the component name.
  * If not found, 0 is returned.
  */
-Component* findcomponent( char *component_name, Component *component_table )
+const Component* findcomponent( char *component_name, const Component *component_table )
 {
 	// Iterate all components
-	Component *component = component_table;
+	const Component *component = component_table;
+
 	while( component->component_name )
 	{
 		// See if name matches
@@ -94,6 +97,7 @@ Component* findcomponent( char *component_name, Component *component_table )
 	return 0;
 }
 
+/*
 void testcommandparse()
 {
 	char *str_component = "SYS";
@@ -116,6 +120,7 @@ void testcommandparse()
 	// Invoke function
 	command->handler( 0, response_buffer );
 }
+*/
 
 int parsecommandline( uint8_t* buffer )
 {
@@ -137,7 +142,7 @@ int parsecommandline( uint8_t* buffer )
 	str_command = (char*)buffer;
 
 	// Skip until we find =, CR, LF or EOS
-	while( *buffer  && *buffer != '=' && *buffer != '\r' && *buffer != '\n' )
+	while( *buffer && *buffer != '=' && *buffer != '\r' && *buffer != '\n' )
 		buffer++;
 
 	// Did we find =?
@@ -163,14 +168,18 @@ int parsecommandline( uint8_t* buffer )
 	}
 
 	// See if we can match the component
-	Component *component = findcomponent( str_component, components );
-
+	const Component *component = findcomponent( str_component, components );
+/*
+	sniprintf( response_buffer, OUTPUT_BUFFER_SIZE, "Component: %s, ptr: %p, ptr->name: %s\r\n", str_component, component, component->component_name );
+	USB_CDC_print( response_buffer );
+	return 0;
+*/
 	// If we didn't find any, return
 	if( !component )
 		return 1;
 
 	// We got the component; see if we can find the command
-	Command *command = findcommand( str_command, component->command_table );
+	const Command *command = findcommand( str_command, component->command_table );
 
 	// If we didn't find any, return
 	if( !command )

@@ -47,8 +47,22 @@ void parseCommand(void)
 	}
 	else
 	{
-		if( parsecommandline( commandBuffer ) != 0 )
-			USB_CDC_print( "ERROR in command parser.\r\n" );
+		int result = parsecommandline( commandBuffer );
+		switch( result )
+		{
+			case 1:
+				USB_CDC_print( "ERROR in command parser: unknown component!\r\n" );
+				break;
+
+			case 2:
+				USB_CDC_print( "ERROR in command parser: unknown command!\r\n" );
+				break;
+
+			default:
+				// No error
+				break;
+		}
+
 	}
 
 	// Reset command buffer and state
@@ -59,10 +73,11 @@ void parseCommand(void)
 int main (void)
 {
     SystemCoreClockUpdate ();
-    USB_CDC_init();
+
     gps_init();
 
     UARTInit( 9600 );
+    USB_CDC_init();
 
 	// Initialize soft UART using CT32B0 timer
 //	swu_init( LPC_CT32B0 );
@@ -75,7 +90,7 @@ int main (void)
     commandBufferPtr = 0;
 
     // Send "ready"
-    USB_CDC_print( "Ready...\r\n" );
+    // USB_CDC_print( "Ready...\r\n" );
 
 	// Empty main loop
 	while( 1 )

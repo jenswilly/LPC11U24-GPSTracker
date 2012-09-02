@@ -27,3 +27,6 @@ build
 
 # Ignore Icon.png in root folder (for Tower)
 /Icon.png
+
+/build-number.txt
+/src/version.c

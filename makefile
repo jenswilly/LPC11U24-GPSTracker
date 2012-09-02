@@ -55,6 +55,7 @@ SRC  = $(COMMONDIR)/cmsis/core/core_cm0.c \
 	   ./src/sys_commands.c \
 	   ./src/gps.c \
 	   ./src/version.c \
+	   ./src/fifo_buffer.c \
        ./src/main.c
 
 # List ASM source files here

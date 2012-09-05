@@ -22,5 +22,3 @@ void SysTick_Delay( uint32_t ticks )
 	while( SysTick_Value < ticks )
 		;
 }
-
-

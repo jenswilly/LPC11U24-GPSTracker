@@ -16,6 +16,7 @@
 #include "eeprom.h"
 #include "cmdparser.h"
 #include "gps.h"
+#include "gsm.h"
 #include "lpc_swu.h"
 #include "uart.h"
 
@@ -76,12 +77,12 @@ int main (void)
     SysTick_Config( 480 );	// For a SysTick frequency of 10 Hz. Each tick is 0.1 secs.
 
     gps_init();
+    gsm_init();
 
+    // Initialize comms
     UARTInit( 9600 );
     USB_CDC_init();
-
-	// Initialize soft UART using CT32B0 timer
-//	swu_init( LPC_CT32B0 );
+	swu_init( LPC_CT32B0 );
 
     // Init state machine
     state = StateIdle;

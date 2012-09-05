@@ -52,6 +52,11 @@ uint32_t fifobuffer_read( FIFOBuffer *buffer, uint8_t *destination, uint32_t len
 	return read;
 }
 
+uint32_t fifobuffer_readend( FIFOBuffer *buffer, uint8_t *destination, uint32_t length )
+{
+	return 0;
+}
+
 /* Writes up to length bytes from source to the buffer data.
  * The actual number of written bytes is returned.
  */

@@ -36,6 +36,7 @@ const Command sys_commands[] =
 
 const Command gsm_commands[] =
 {
+	{"at",		0, gsm_do_AT },
 	{0,0,0}
 };
 

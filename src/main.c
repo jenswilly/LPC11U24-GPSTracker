@@ -74,7 +74,7 @@ void parseCommand(void)
 int main (void)
 {
     SystemCoreClockUpdate ();
-    SysTick_Config( 480 );	// For a SysTick frequency of 10 Hz. Each tick is 0.1 secs.
+    SysTick_Config( 4800000 );	// For a SysTick frequency of 10 Hz. Each tick is 0.1 secs.
 
     gps_init();
     gsm_init();

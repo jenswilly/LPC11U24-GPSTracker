@@ -27,6 +27,8 @@ CMD( sys_do_eeprom );
 
 // GSM commands
 CMD( gsm_do_AT );
+CMD( gsm_do_pin );
+CMD( gsm_do_raw );
 
 // GPS commands
 CMD( gps_do_init );

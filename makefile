@@ -54,6 +54,7 @@ SRC  = $(COMMONDIR)/cmsis/core/core_cm0.c \
 	   ./src/cmdparser.c \
 	   ./src/sys_commands.c \
 	   ./src/gps.c \
+	   ./src/gsm.c \
 	   ./src/version.c \
 	   ./src/fifo_buffer.c \
 	   ./src/systick.c \

@@ -37,6 +37,8 @@ const Command sys_commands[] =
 const Command gsm_commands[] =
 {
 	{"at",		0, gsm_do_AT },
+	{"pin",		0, gsm_do_pin },
+	{"raw",		0, gsm_do_raw },
 	{0,0,0}
 };
 

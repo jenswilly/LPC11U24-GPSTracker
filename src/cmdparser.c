@@ -39,6 +39,8 @@ const Command gsm_commands[] =
 	{"at",		0, gsm_do_AT },
 	{"pin",		0, gsm_do_pin },
 	{"raw",		0, gsm_do_raw },
+	{"sms",		0, gsm_do_SMS },
+	{"init",	0, gsm_do_initsequence },
 	{0,0,0}
 };
 

@@ -17,5 +17,7 @@ void gsm_init( void );
 void gsm_do_AT( char *args, char *output );
 void gsm_do_pin( char *args, char *output );
 void gsm_do_raw( char *args, char *output );
+void gsm_do_SMS( char *args, char *output );
+void gsm_do_initsequence( char *args, char *output );
 
 #endif /* GSM_H_ */

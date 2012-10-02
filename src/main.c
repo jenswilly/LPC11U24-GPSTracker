@@ -44,7 +44,9 @@ void parseCommand(void)
 	if( strncasecmp( "test", (char*)commandBuffer, 4 ) == 0 )
 	{
 		// TEMP: show test response
-		USB_CDC_print( "TEST response.\r\n" );
+		USB_CDC_print( "TEST response1.\r\n" );
+		USB_CDC_print( "TEST response2.\r\n" );
+
 	}
 	else
 	{
